@@ -1,4 +1,4 @@
-const path = require('path');
+const path = require("path");
 
 module.exports = (nextConfig) => {
   return Object.assign({}, nextConfig, {
@@ -7,9 +7,16 @@ module.exports = (nextConfig) => {
         test: /\.+(js|jsx|mjs|ts|tsx)$/,
         loader: options.defaultLoaders.babel,
         include: [
-          path.join(__dirname, '..', 'main', 'common'),
-          path.join(__dirname, '..', 'main', 'remote-states', 'use-remote-state.ts')
-        ]
+          path.join(__dirname, "..", "main", "common"),
+          path.join(__dirname, "..", "main", "utils"),
+          path.join(
+            __dirname,
+            "..",
+            "main",
+            "remote-states",
+            "use-remote-state.ts"
+          ),
+        ],
       });
 
       config.target = 'electron-renderer';
@@ -20,6 +27,6 @@ module.exports = (nextConfig) => {
       }
 
       return config;
-    }
-  })
-}
+    },
+  });
+};

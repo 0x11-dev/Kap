@@ -27,8 +27,8 @@ const MainControls = {};
 const remote = electron.remote || false;
 let menu;
 
-const buildMenu = async ({selectedApp}) => {
-  const {buildWindowsMenu} = remote.require('./utils/windows');
+const buildMenu = async ({ selectedApp }) => {
+  const { buildWindowsMenu } = remote.require("./utils/windows");
   menu = await buildWindowsMenu(selectedApp);
 };
 
@@ -39,7 +39,7 @@ class Left extends React.Component {
     const {selectedApp} = nextProps;
 
     if (selectedApp !== previousState.selectedApp) {
-      buildMenu({selectedApp});
+      // buildMenu({selectedApp}); //FIXME: extremely slow, disable for now
       return {selectedApp};
     }
 

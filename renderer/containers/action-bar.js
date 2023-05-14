@@ -15,7 +15,7 @@ export default class ActionBarContainer extends Container {
       return;
     }
 
-    this.settings = this.remote.require('./common/settings').settings;
+    this.settings = require('../common/settings').settings;
     this.state = {
       cropperWidth: '',
       cropperHeight: ''

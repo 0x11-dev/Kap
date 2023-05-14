@@ -18,7 +18,7 @@ export default class PreferencesContainer extends Container {
 
   mount = async setOverlay => {
     this.setOverlay = setOverlay;
-    const {settings, shortcuts} = this.remote.require('./common/settings');
+    const { settings, shortcuts } = require("../common/settings");
     this.settings = settings;
     this.settings.shortcuts = shortcuts;
     this.systemPermissions = this.remote.require('./common/system-permissions');

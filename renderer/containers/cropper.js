@@ -47,9 +47,14 @@ export default class CropperContainer extends Container {
       return;
     }
 
-    const {settings} = this.remote.require('./common/settings');
+    const { settings } = require("../common/settings");
     this.settings = settings;
-    this.settings.getSelectedInputDeviceId = this.remote.require('./utils/devices').getSelectedInputDeviceId;
+    const getSelectedInputDeviceId = ()=>{
+      //will not block constructor
+      this.settings.getSelectedInputDeviceId =
+      this.remote.require("./utils/devices").getSelectedInputDeviceId; //FIXME: should use api instead of remote  
+    }
+    this.settings.getSelectedInputDeviceId = getSelectedInputDeviceId;
 
     this.state = {
       isRecording: false,
@@ -64,12 +69,18 @@ export default class CropperContainer extends Container {
       isActive: false,
       isReady: false,
       ratio: [1, 1],
-      recordAudio: this.settings.get('recordAudio'),
-      audioInputDeviceId: this.settings.getSelectedInputDeviceId()
+      recordAudio: this.settings.get("recordAudio"),
+      audioInputDeviceId: null,
     };
 
-    this.settings.onDidChange('recordAudio', recordAudio => {
-      this.setState({recordAudio});
+    requestIdleCallback(()=>{
+      this.setState({
+        audioInputDeviceId: this.settings.getSelectedInputDeviceId(),
+      });
+    })
+
+    this.settings.onDidChange("recordAudio", (recordAudio) => {
+      this.setState({ recordAudio });
     });
 
     this.settings.onDidChange('audioInputDeviceId', async () => {
